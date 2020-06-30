@@ -1,18 +1,19 @@
 # Initial framework taken from https://github.com/jaara/AI-blog/blob/master/CartPole-A3C.py
 
 import numpy as np
-
 import gym
-
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Input, Dense
 from tensorflow.keras import backend as K
 from tensorflow.keras.optimizers import Adam
-
 import numba as nb
 from tensorboardX import SummaryWriter
 
+#ENV = 'Breakout-ram-v0'
 ENV = 'LunarLander-v2'
+#ENV = 'CartPole-v0'
+#ENV = 'CartPole-v1'
+
 CONTINUOUS = False
 
 EPISODES = 100000
