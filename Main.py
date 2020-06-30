@@ -10,9 +10,10 @@ import numba as nb
 from tensorboardX import SummaryWriter
 
 #ENV = 'Breakout-ram-v0'
-ENV = 'LunarLander-v2'
-#ENV = 'CartPole-v0'
+#ENV = 'LunarLander-v2'
+ENV = 'CartPole-v0'
 #ENV = 'CartPole-v1'
+#ENV = 'Pendulum-v0'
 
 CONTINUOUS = False
 
@@ -35,11 +36,9 @@ LR = 1e-4  # Lower lr stabilises training greatly
 
 DUMMY_ACTION, DUMMY_VALUE = np.zeros((1, NUM_ACTIONS)), np.zeros((1, 1))
 
-
 @nb.jit
 def exponential_average(old, new, b1):
     return old * b1 + (1-b1) * new
-
 
 def proximal_policy_optimization_loss(advantage, old_prediction):
     def loss(y_true, y_pred):
@@ -48,7 +47,6 @@ def proximal_policy_optimization_loss(advantage, old_prediction):
         r = prob/(old_prob + 1e-10)
         return -K.mean(K.minimum(r * advantage, K.clip(r, min_value=1 - LOSS_CLIPPING, max_value=1 + LOSS_CLIPPING) * advantage) + ENTROPY_LOSS * -(prob * K.log(prob + 1e-10)))
     return loss
-
 
 def proximal_policy_optimization_loss_continuous(advantage, old_prediction):
     def loss(y_true, y_pred):
@@ -64,7 +62,6 @@ def proximal_policy_optimization_loss_continuous(advantage, old_prediction):
 
         return -K.mean(K.minimum(r * advantage, K.clip(r, min_value=1 - LOSS_CLIPPING, max_value=1 + LOSS_CLIPPING) * advantage))
     return loss
-
 
 class Agent:
     def __init__(self):
@@ -233,7 +230,6 @@ class Agent:
             self.writer.add_scalar('Critic loss', critic_loss.history['loss'][-1], self.gradient_steps)
 
             self.gradient_steps += 1
-
 
 if __name__ == '__main__':
     ag = Agent()
