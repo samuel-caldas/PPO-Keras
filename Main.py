@@ -10,8 +10,8 @@ import numba as nb
 from tensorboardX import SummaryWriter
 
 #ENV = 'Breakout-ram-v0'
-#ENV = 'LunarLander-v2'
-ENV = 'CartPole-v0'
+ENV = 'LunarLander-v2'
+#ENV = 'CartPole-v0'
 #ENV = 'CartPole-v1'
 #ENV = 'Pendulum-v0'
 
